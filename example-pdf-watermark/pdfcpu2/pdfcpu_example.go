@@ -8,7 +8,7 @@ import (
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 )
 
-// 字体大小points:12, 透明度opacity:0.6,旋转30°，字体名fontname，缩放因子scalefactor,文字对齐aligntext居中
+// 字体大小points:6, 透明度opacity:0.6,旋转30°，字体名fontname，缩放因子scalefactor,文字对齐aligntext居中
 const PdfFontConfig = "points:6,opacity:0.3,rot:30,fontname:SimHei,scalefactor:1.5,aligntext:c"
 const OnTop = true
 
