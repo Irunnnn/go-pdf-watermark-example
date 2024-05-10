@@ -47,18 +47,9 @@ func AddWaterMarkToLocal(inFile string, outFile string, waterMark string) error 
 
 // function for mutilple lines text
 func GetWaterMarkStr(waterMark string) string {
-	count := 6
-	pattern := "[a-zA-Z0-9\u4e00-\u9fa5]"
-	re := regexp.MustCompile(pattern)
-	textLen := len(re.FindAllString(waterMark, -1))
-	switch {
-	case textLen > 25 && textLen <= 40:
-		count = 5
-	case textLen > 40 && textLen <= 60:
-		count = 4
-	case textLen > 60:
-		count = 3
-	}
+	textLen := len(waterMark)
+	// automatically calculate the line count
+	count :=  int(math.Round(250.0 / (float64(textLen) + 10.0)))
 	var sb1 strings.Builder
 	for i := 0; i < count; i++ {
 		sb1.WriteString(waterMark)
@@ -70,15 +61,17 @@ func GetWaterMarkStr(waterMark string) string {
 	sb1Str := sb1.String()
 	//拼接成多行文字
 	var sb2 strings.Builder
-	rows := 20
+	lineSpace := "\n \n \n \n \n \n \n"
+	height := float64(len(lineSpace) / 2) + 1.0
+	rows := int(300.0 / (float64(count) * height ))
 	for i := 0; i < rows; i++ {
 		if i%2 == 0 {
 			sb2.WriteString(sb1Str)
 		} else {
-			sb2.WriteString(strings.Repeat("  ", textLen) + sb1Str)
+			sb2.WriteString(strings.Repeat("  ", 5) + sb1Str[:len(sb1Str)-5])
 		}
 		if i < rows-1 {
-			sb2.WriteString("\n \n \n \n \n \n \n \n")
+			sb2.WriteString("\n \n \n \n \n \n \n")
 		}
 	}
 	return sb2.String()
