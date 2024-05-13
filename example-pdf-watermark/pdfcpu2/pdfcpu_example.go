@@ -8,7 +8,7 @@ import (
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 )
 
-// 字体大小points:6, 透明度opacity:0.6,旋转30°，字体名fontname，缩放因子scalefactor,文字对齐aligntext居中
+// fontsize-points:6, opacity:0.3,rotate:30°，fontname:simhei，scalefactor: 1.5 abd,text alignment-aligntext:center
 const PdfFontConfig = "points:6,opacity:0.3,rot:30,fontname:SimHei,scalefactor:1.5,aligntext:c"
 const OnTop = true
 
@@ -57,13 +57,13 @@ func GetWaterMarkStr(waterMark string) string {
 			sb1.WriteString(strings.Repeat(" ", 10)) //文字间隔
 		}
 	}
-	//单行文字制作完成
+	//single line
 	sb1Str := sb1.String()
-	//拼接成多行文字
+	//multiple lines
 	var sb2 strings.Builder
 	lineSpace := "\n \n \n \n \n \n \n"
-	height := float64(len(lineSpace) / 2) + 1.0
-	rows := int(300.0 / (float64(count) * height ))
+	height := float64(len(lineSpace) / 2.0)
+	rows := int(math.Round(100.0 / height))
 	for i := 0; i < rows; i++ {
 		if i%2 == 0 {
 			sb2.WriteString(sb1Str)
@@ -71,7 +71,7 @@ func GetWaterMarkStr(waterMark string) string {
 			sb2.WriteString(strings.Repeat("  ", 5) + sb1Str[:len(sb1Str)-5])
 		}
 		if i < rows-1 {
-			sb2.WriteString("\n \n \n \n \n \n \n")
+			sb2.WriteString(lineSpace)
 		}
 	}
 	return sb2.String()
